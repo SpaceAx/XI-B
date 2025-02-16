@@ -10,8 +10,21 @@ async function login() {
         const user = users.find(u => u.username === username && u.password === password);
 
         if (user) {
-            message.textContent = `Login berhasil! Selamat datang, ${user.role}.`;
+            message.textContent = `Login berhasil!`;
             message.className = "mt-4 text-green-600 text-center font-semibold";
+            
+            // Simpan user role di localStorage
+            localStorage.setItem("role", user.role);
+            localStorage.setItem("username", user.username);
+
+            // Redirect ke panel sesuai role
+            setTimeout(() => {
+                if (user.role === "admin") {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "user.html";
+                }
+            }, 1000);
         } else {
             message.textContent = "Akun tidak tersedia!";
             message.className = "mt-4 text-red-500 text-center font-semibold";
@@ -24,17 +37,3 @@ async function login() {
         message.classList.remove("hidden");
     }
 }
-
-// Fungsi untuk menampilkan dan menyembunyikan password
-document.getElementById("togglePassword").addEventListener("click", function () {
-    const passwordField = document.getElementById("password");
-    const eyeIcon = document.getElementById("eye-icon");
-
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        passwordField.type = "password";
-        eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-});
