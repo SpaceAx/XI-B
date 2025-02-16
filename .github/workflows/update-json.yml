@@ -1,11 +1,10 @@
-name: Update Jadwal JSON
+name: Update jadwal.json
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  schedule:
-    - cron: "0 0 * * *" # Menjalankan setiap hari pada pukul 00:00 UTC
 
 jobs:
   update-json:
@@ -14,21 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install axios moment fs
-
-      - name: Update JSON file
-        run: node update-jadwal.js
-
-      - name: Commit and push changes
+      - name: Setup Git
         run: |
           git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit and Push Changes
+        run: |
           git add jadwal.json
-          git commit -m "Update jadwal otomatis"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/SpaceAx/XI-B.git main
+          git commit -m "Update jadwal.json via GitHub Actions" || echo "No changes to commit"
+          git push https://$GH_TOKEN@github.com/SpaceAx/XI-B.git main
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
