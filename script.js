@@ -13,13 +13,16 @@ async function login() {
 
         if (user) {
             message.textContent = `Login berhasil! Selamat datang, ${user.role}.`;
-            message.className = "success";
+            message.className = "mt-4 text-green-600 text-center font-semibold";
         } else {
             message.textContent = "Akun tidak tersedia!";
-            message.className = "error";
+            message.className = "mt-4 text-red-500 text-center font-semibold";
         }
         message.classList.remove("hidden");
     } catch (error) {
         console.error("Gagal mengambil data pengguna:", error);
+        message.textContent = "Terjadi kesalahan, coba lagi.";
+        message.className = "mt-4 text-red-500 text-center font-semibold";
+        message.classList.remove("hidden");
     }
 }
