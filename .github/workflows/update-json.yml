@@ -1,0 +1,34 @@
+name: Update Jadwal JSON
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *" # Menjalankan setiap hari pada pukul 00:00 UTC
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install axios moment fs
+
+      - name: Update JSON file
+        run: node update-jadwal.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add jadwal.json
+          git commit -m "Update jadwal otomatis"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/SpaceAx/XI-B.git main
