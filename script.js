@@ -3,12 +3,10 @@ async function login() {
     const password = document.getElementById("password").value;
     const message = document.getElementById("message");
 
-    // Ambil data dari JSON
     try {
         const response = await fetch("users.json");
         const users = await response.json();
 
-        // Cek apakah username dan password cocok
         const user = users.find(u => u.username === username && u.password === password);
 
         if (user) {
@@ -28,17 +26,15 @@ async function login() {
 }
 
 // Fungsi untuk menampilkan dan menyembunyikan password
-function togglePassword() {
+document.getElementById("togglePassword").addEventListener("click", function () {
     const passwordField = document.getElementById("password");
     const eyeIcon = document.getElementById("eye-icon");
 
     if (passwordField.type === "password") {
         passwordField.type = "text";
-        eyeIcon.classList.remove("fa-eye");
-        eyeIcon.classList.add("fa-eye-slash");
+        eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
     } else {
         passwordField.type = "password";
-        eyeIcon.classList.remove("fa-eye-slash");
-        eyeIcon.classList.add("fa-eye");
+        eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
     }
-}
+});
