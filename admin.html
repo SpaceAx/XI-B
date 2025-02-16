@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="flex bg-gray-100">
+    <!-- Sidebar -->
+    <div class="w-64 bg-blue-600 min-h-screen text-white p-5">
+        <h2 class="text-2xl font-bold mb-6">Admin Panel</h2>
+        <ul>
+            <li class="mb-4"><a href="#" onclick="showSection('add')" class="hover:underline">Tambah Jadwal</a></li>
+            <li><a href="#" onclick="showSection('view')" class="hover:underline">Lihat Jadwal</a></li>
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 p-6">
+        <div id="add" class="section">
+            <h2 class="text-xl font-bold mb-4">Tambah Jadwal</h2>
+            <input type="text" id="title" placeholder="Judul" class="w-full px-4 py-2 border rounded-lg mb-4">
+            <textarea id="description" placeholder="Deskripsi" class="w-full px-4 py-2 border rounded-lg mb-4"></textarea>
+            <input type="file" id="image" class="mb-4">
+            <button onclick="saveSchedule()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Simpan</button>
+        </div>
+
+        <div id="view" class="section hidden">
+            <h2 class="text-xl font-bold mb-4">Daftar Jadwal</h2>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr>
+                        <th class="border p-2">Judul</th>
+                        <th class="border p-2">Deskripsi</th>
+                        <th class="border p-2">Gambar</th>
+                        <th class="border p-2">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-list"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
